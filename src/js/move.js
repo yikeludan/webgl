@@ -66,7 +66,6 @@ export default class MoveVec {
         this.bg.tint = "white";
         this.bg.interactive = true;
 
-        let aram = new Aram(this.app,30,30,120);
 
         this.arrow = this.app.stage.addChild(PIXI.Sprite.from('img/icon-arrow-down-hover.png'));
         this.bunny = this.app.stage.addChild(PIXI.Sprite.from('img/4.png'));
@@ -92,8 +91,10 @@ export default class MoveVec {
         this.bunny.interactive = true;
         this.sp.w = this.bunny.width;
         this.sp.h = this.bunny.height;
-        this.draw();
+        window.hero = this.bunny;
+        let aram = new Aram(this.app,50,50,0);
         this.mouseMoveSp();
+        this.draw();
 
     }
 
@@ -172,12 +173,8 @@ export default class MoveVec {
         let scale_h = 1 + Math.sin(this.rr * 0.1) * this.bounceSpring / 3 ;
         let sc_w = 0.5 + Math.sin(this.count) * 0.04;
         let sc_h = 0.5 + Math.cos(this.count) * 0.04;
-
-
         this.bunny.scale.x = sc_w;
         this.bunny.scale.y = sc_h;
-        /*this.bunny.width = 42 * scale_w;
-        this.bunny.height = 48.5 * scale_h;*/
         this.bunny.x += this.vx * t * this.speed ;
         this.bunny.y += this.vy * t * this.speed ;
         this.bunny.rotation = this.ro;
@@ -189,7 +186,7 @@ export default class MoveVec {
     draw(){
         this.app.ticker.add((delta) => {
             this.HeroDraw(delta);
-            this.KnifeDraw(delta);
+           // this.KnifeDraw(delta);
         });
     }
 }
