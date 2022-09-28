@@ -92,7 +92,14 @@ export default class MoveVec {
         this.sp.w = this.bunny.width;
         this.sp.h = this.bunny.height;
         window.hero = this.bunny;
-        let aram = new Aram(this.app,50,50,0);
+
+        let tempAngel = 0;
+        let tempLength = 6;
+        let deng = parseInt(360/tempLength);
+        for(let i = 0;i < tempLength ;i++){
+            let aram = new Aram(this.app,50,50,tempAngel);
+            tempAngel += deng;
+        }
         this.mouseMoveSp();
         this.draw();
 
