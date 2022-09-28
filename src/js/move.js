@@ -189,6 +189,7 @@ export default class MoveVec {
 
 
     HeroDraw(t){
+        
         //正弦公式 + 余弦公式
         let scale_w = 1 + Math.sin(this.rr * 0.1) * this.bounceSpring * 1.5  ;
         let scale_h = 1 + Math.sin(this.rr * 0.1) * this.bounceSpring / 3 ;
