@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-
+import Aram from "./aram";
 export default class MoveVec {
     constructor() {
         this.app = null;
@@ -66,24 +66,10 @@ export default class MoveVec {
         this.bg.tint = "white";
         this.bg.interactive = true;
 
-     let rectangle = new PIXI.Rectangle(0, 0, 90, 90);
-
-        let texture1 =  PIXI.Texture.from('img/24.webp');
-        const texture2 = new PIXI.Texture(texture1.baseTexture, rectangle);
-
-        //texture1.frame = rectangle;
-        let sprite1 = new PIXI.Sprite(texture2);
-        sprite1.position.set(30,30);
-
-        this.app.stage.addChild(sprite1);
-
-
+        let aram = new Aram(this.app,30,30,120);
 
         this.arrow = this.app.stage.addChild(PIXI.Sprite.from('img/icon-arrow-down-hover.png'));
         this.bunny = this.app.stage.addChild(PIXI.Sprite.from('img/4.png'));
-
-
-
         this.bunny.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
         this.bunny.anchor.set(0.5, 0.5);
         this.bunny.scale.set(.5);
