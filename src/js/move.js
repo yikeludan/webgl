@@ -73,21 +73,11 @@ export default class MoveVec {
 
         //texture1.frame = rectangle;
         let sprite1 = new PIXI.Sprite(texture2);
+        sprite1.position.set(30,30);
 
         this.app.stage.addChild(sprite1);
 
-        //  sprite1.texture.frame = rectangle;
 
-    //    texture1.frame = rectangle;
-
-
-      /*  const base = new PIXI.BaseTexture("img/24.webp")
-        base.setSize(100, 100) // Original image size
-        const playerTexture =PIXI.Texture.from(base);
-        playerTexture.frame = new PIXI.Rectangle(0, 0, 40, 40)
-        const player = new PIXI.Sprite(playerTexture)
-        player.position.set(100, 100)
-        this.app.stage.addChild(player)*/
 
         this.arrow = this.app.stage.addChild(PIXI.Sprite.from('img/icon-arrow-down-hover.png'));
         this.bunny = this.app.stage.addChild(PIXI.Sprite.from('img/4.png'));
