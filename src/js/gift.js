@@ -17,6 +17,7 @@ export default class Gift {
 
     Init(){
 
+
         let spImage =  PIXI.Texture.from('img/5.png');
         let texture = new PIXI.Texture(spImage.baseTexture);
         this.aram = new PIXI.Sprite(texture);
