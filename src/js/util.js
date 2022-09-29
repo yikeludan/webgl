@@ -19,6 +19,22 @@ const util = {
         vectorMagnitude.x = x/param;
         vectorMagnitude.y = y/param;
         return vectorMagnitude;
+    },
+    lerp(a,b,t){
+        if (t <= 0){
+            return a;
+        } else if(t >= 1){
+            return b;
+        }
+        return a + (b - a) * t;
+    },
+    lerpLoop(a,b,t){
+        if (t <= 0){
+            return a;
+        } else if(t >= 1){
+            return b;
+        }
+        return a + (b - a) * t;
     }
 
 

@@ -9,14 +9,19 @@ export default class Gift {
       this.angel = angel;
       this.radian = 0;
       this.initRadian
-      this.roSpeed = 3;
+      this.roSpeed = 2;
       this.radius = 35;
       this.alpha = alpha;
+      this.anParam = {
+          a:0,
+          b:360,
+          t:0.01,
+          initT:0.01
+      }
       this.Init();
     }
 
     Init(){
-
 
         let spImage =  PIXI.Texture.from('img/5.png');
         let texture = new PIXI.Texture(spImage.baseTexture);
@@ -25,7 +30,7 @@ export default class Gift {
         this.aram.x = window.hero.x + Math.sin(this.initRadian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.initRadian)* this.radius;
         this.aram.rotation = this.initRadian;
-        this.aram.anchor.set(0.5,0.5);
+        this.aram.anchor.set(0,0.5);
         this.aram.scale.set(0.5);
         this.aram.alpha= this.alpha;
         this.app.stage.addChild(this.aram);
@@ -34,33 +39,92 @@ export default class Gift {
 
     }
 
+    tempCricle(t){
+        const graphics = new PIXI.Graphics();
+        graphics.lineStyle(0);
+        graphics.beginFill(0xDE3249, 1);
+        graphics.drawCircle(this.aram.x, this.aram.y, 3);
+        graphics.endFill();
+        this.app.stage.addChild(graphics);
+
+    }
+
     KnifeDraw(t){
-
-        let angel1 = window.giftReplacement.rotation * 180 / Math.PI
-        let angel2 = this.aram.rotation * 180 / Math.PI
-
-
-
-        console.log(angel1,angel2)
         if(Math.sin(window.giftReplacement.rotation)
             == Math.sin(this.aram.rotation)
             && this.aram.rotation != 0){
-            window.aramLock = true;
+           // window.aramLock = true;
         }
         this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
         this.aram.rotation =  - this.radian;
+
+       /* let res = util.lerp(this.anParam.a,
+            this.anParam.b,
+            this.anParam.t);
+        this.angel = res;
+        if(res == this.anParam.b){
+            this.anParam.t = this.anParam.initT;
+        }
+        this.anParam.t += this.roSpeed * t * 0.01;*/
+
+
         this.angel += this.roSpeed * t * 1.5;
-        /*this.radian = -window.giftReplacement.rotation
+
+    }
+
+    CuVectorMagnitude(x,y){
+        let param=Math.sqrt(Math.pow(x,2)
+            +Math.pow(y,2));
+
+        let vec2 = {x:0,y:0}
+        vec2.x = x/param;
+        vec2.y = y/param;
+        return vec2;
+    }
+
+
+    KnifeDraw1(t){
+        let apAramX = window.giftReplacement.x - window.hero.x;
+        let apAramY = window.giftReplacement.y - window.hero.y;
+
+        let vec = this.CuVectorMagnitude(apAramX,apAramY);
+
+
+        let a = vec.y / vec.x;
+
+        let giftX = this.aram.x - window.hero.x;
+        let giftY = this.aram.y - window.hero.y;
+
+        let vec1 = this.CuVectorMagnitude(giftX,giftY);
+
+
+        let b = vec1.y / vec1.x;
+
+        let tan1 = Math.atan2(giftY,giftX);
+        let  tan2 = Math.atan2(apAramY,apAramX);
+        console.log(a,b);
+        if(a  == b){
+            console.log("停住了")
+           // window.aramLock = true;
+
+
+        }
+
+        let verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
+        this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
-        this.aram.rotation =  - this.radian;*/
+        this.aram.rotation =  - this.radian - verticalRradian;
+        this.angel += this.roSpeed * t * 1.5;
+
     }
 
     draw(){
         this.app.ticker.add((delta) => {
-            this.KnifeDraw(delta);
+            this.KnifeDraw1(delta);
+            this.tempCricle(delta);
         });
     }
 }
