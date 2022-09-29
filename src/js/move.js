@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
 import Aram from "./aram";
+import util from "./util";
+import Gift from "./gift";
 export default class MoveVec {
     constructor() {
         this.app = null;
@@ -60,14 +62,13 @@ export default class MoveVec {
         })
         document.body.appendChild(this.app.view);
         this.bg = new PIXI.Sprite(PIXI.Texture.WHITE);
-        this.app.stage.addChild(this.bg);
         this.bg.width = this.app.screen.width;
         this.bg.height = this.app.screen.height;
         this.bg.tint = "white";
         this.bg.interactive = true;
+        this.app.stage.addChild(this.bg);
 
 
-        this.arrow = this.app.stage.addChild(PIXI.Sprite.from('img/icon-arrow-down-hover.png'));
         this.bunny = this.app.stage.addChild(PIXI.Sprite.from('img/4.png'));
         this.bunny.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
         this.bunny.anchor.set(0.5, 0.5);
@@ -79,30 +80,29 @@ export default class MoveVec {
 
 
 
-        this.arrow.anchor.set(0.5,0.5);
-        this.arrow.scale.set(2);
-        this.arrow.position.set(
-            this.app.renderer.screen.width / 4,
-            this.app.renderer.screen.height / 4,
-        );
+
 
         this.app.stage.interactive = true;
-        this.arrow.interactive = true;
         this.bunny.interactive = true;
-        this.sp.w = this.bunny.width;
-        this.sp.h = this.bunny.height;
         window.hero = this.bunny;
-
-        let tempAngel = 0;
-        let tempLength = 6;
-        let deng = parseInt(360/tempLength);
-        for(let i = 0;i < tempLength ;i++){
-            let aram = new Aram(this.app,50,50,tempAngel);
-            tempAngel += deng;
-        }
+        this.getAramList();
         this.mouseMoveSp();
         this.draw();
 
+    }
+
+    getAramList(){
+        let tempAngel = 0;
+        let tempLength = 5;
+        let bisection = parseInt(360/tempLength);
+        for(let i = 0;i < tempLength ;i++){
+            let aram = new Aram(this.app,
+                50,
+                50,tempAngel,
+                i == 1 ? 0: 1);
+            tempAngel += bisection;
+        }
+        let gift = new Gift(this.app,50,50,0,1);
     }
 
 
@@ -173,11 +173,9 @@ export default class MoveVec {
 
 
     HeroDraw(t){
-
-        //df
         //正弦公式 + 余弦公式
         let scale_w = 1 + Math.sin(this.rr * 0.1) * this.bounceSpring * 1.5  ;
-        let scale_h = 1 + Math.sin(this.rr * 0.1) * this.bounceSpring / 3 ;
+        let scale_h = 1 + Math.cos(this.rr * 0.1) * this.bounceSpring / 3 ;
         let sc_w = 0.5 + Math.sin(this.count) * 0.04;
         let sc_h = 0.5 + Math.cos(this.count) * 0.04;
         this.bunny.scale.x = sc_w;

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
-
-export default class Aram {
+import util from "./util";
+export default class Gift {
     constructor(app,x,y,angel,alpha) {
       this.app = app;
       this.aram = null;
@@ -8,18 +8,14 @@ export default class Aram {
       this.y = y;
       this.angel = angel;
       this.radian = 0;
-      this.isGift = alpha == 1 ? false : true;
       this.initRadian
-      this.roSpeed = 1;
-      this.radius = 100;
+      this.roSpeed = 3;
+      this.radius = 35;
       this.alpha = alpha;
       this.Init();
     }
 
     Init(){
-        let rectangle = new PIXI.Rectangle(800, 535, 60, 35);
-    /*    let spImage =  PIXI.Texture.from('img/24.webp');
-        let texture = new PIXI.Texture(spImage.baseTexture, rectangle);*/
 
         let spImage =  PIXI.Texture.from('img/5.png');
         let texture = new PIXI.Texture(spImage.baseTexture);
@@ -33,28 +29,37 @@ export default class Aram {
         this.aram.alpha= this.alpha;
         this.app.stage.addChild(this.aram);
         this.draw();
-    }
-    gifReplacement(){
-        if(this.isGift){
-            window.giftReplacement = this.aram;
-        }
+
+
     }
 
     KnifeDraw(t){
+
+        let angel1 = window.giftReplacement.rotation * 180 / Math.PI
+        let angel2 = this.aram.rotation * 180 / Math.PI
+
+
+
+        console.log(angel1,angel2)
+        if(Math.sin(window.giftReplacement.rotation)
+            == Math.sin(this.aram.rotation)
+            && this.aram.rotation != 0){
+            window.aramLock = true;
+        }
         this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
         this.aram.rotation =  - this.radian;
         this.angel += this.roSpeed * t * 1.5;
+        /*this.radian = -window.giftReplacement.rotation
+        this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
+        this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
+        this.aram.rotation =  - this.radian;*/
     }
 
     draw(){
         this.app.ticker.add((delta) => {
-            if(!window.aramLock){
-                this.gifReplacement();
-                this.KnifeDraw(delta);
-            }
-
+            this.KnifeDraw(delta);
         });
     }
 }
