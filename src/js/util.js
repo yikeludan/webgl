@@ -20,7 +20,7 @@ const util = {
         vectorMagnitude.y = y/param;
         return vectorMagnitude;
     },
-    lerp(a,b,t){
+    lerp(a,b,t){//缓动函数
         if (t <= 0){
             return a;
         } else if(t >= 1){
@@ -28,13 +28,21 @@ const util = {
         }
         return a + (b - a) * t;
     },
-    lerpLoop(a,b,t){
+    lerpLoop(a,b,t,speed){
         if (t <= 0){
             return a;
         } else if(t >= 1){
             return b;
         }
-        return a + (b - a) * t;
+        let res = a + (b - a) * t
+        t += t * speed * 0.01;
+        return res;
+    },
+    switchDeg(vec1,vec2){
+        let diff_x = vec2.x - vec1.x,
+            diff_y = vec2.y - vec1.y;
+        //返回角度,不是弧度
+        return 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
     }
 
 

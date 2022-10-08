@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js'
 import util from "./util";
+import aramJsonParam from "./util/jsonParam";
 export default class Gift {
     constructor(app,x,y,angel,alpha) {
       this.app = app;
@@ -87,12 +88,33 @@ export default class Gift {
     }
 
 
-    TransitionRoation(){
-
+    /**
+     * 弧度 = 角度 * Math.PI / 180
+       角度 = 弧度 * 180 / Math.PI
+     * @param t
+     * @zhoubo
+     */
+    TransitionRoation(t){
+        if(!window.aramLock){
+            return;
+        }
+        aramJsonParam.tranRoationParam.a =   this.aram.rotation;
+        aramJsonParam.tranRoationParam.b =   window.giftReplacement.rotation;
+        let res = util.lerp(aramJsonParam.tranRoationParam.a,
+            aramJsonParam.tranRoationParam.b,
+            aramJsonParam.tranRoationParam.t);
+        let rad =   -8
+        let deg =  rad * 180 / Math.PI
+        console.log("res = " + deg,);
+        aramJsonParam.tranRoationParam.t += this.roSpeed * t * 0.01;
+       // this.aram.rotation = deg;
     }
 
 
     KnifeDraw1(t){
+        if(window.aramLock){
+            return;
+        }
         let apAramX = window.giftReplacement.x - window.hero.x;
         let apAramY = window.giftReplacement.y - window.hero.y;
         let vec = this.CuVectorMagnitude(apAramX,apAramY);
@@ -124,7 +146,10 @@ export default class Gift {
 
     }
 
-    drawDebugLine(){
+    DrawDebugLine(){
+        if(window.aramLock){
+            return;
+        }
         this.debugLine.clear();
         this.debugLine.beginFill(0xDE3249, 1);
         this.debugLine.drawCircle(this.aram.x, this.aram.y, 5);
@@ -134,11 +159,9 @@ export default class Gift {
 
     draw(){
         this.app.ticker.add((delta) => {
-            if(window.aramLock){
-                return;
-            }
             this.KnifeDraw1(delta);
-            this.drawDebugLine();
+            this.DrawDebugLine();
+            this.TransitionRoation(delta);
         });
     }
 }
