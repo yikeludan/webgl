@@ -103,11 +103,15 @@ export default class Gift {
         let res = util.lerp(aramJsonParam.tranRoationParam.a,
             aramJsonParam.tranRoationParam.b,
             aramJsonParam.tranRoationParam.t);
-        let rad =   -8
-        let deg =  rad * 180 / Math.PI
-        console.log("res = " + deg,);
+      //  let rad =   - 60 * Math.PI / 180
+        let deg =  this.aram.rotation * 180 / Math.PI
+        let deg1 =  window.giftReplacement.rotation * 180 / Math.PI
+
+        let deg2 = Math.abs(deg1) - 360;
+        let rad2 =   - deg2 * Math.PI / 180
+        console.log("res = " + deg," res1 = "+ deg1, " res2 = "+ deg2);
         aramJsonParam.tranRoationParam.t += this.roSpeed * t * 0.01;
-       // this.aram.rotation = deg;
+        this.aram.rotation = rad2;
     }
 
 
