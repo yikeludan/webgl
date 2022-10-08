@@ -14,6 +14,7 @@ export default class Gift {
       this.radius = 35;
       this.alpha = alpha;
       this.debugLine = null;
+      this.verticalRradian = null;
       this.anParam = {
           a:0,
           b:360,
@@ -95,23 +96,24 @@ export default class Gift {
      * @zhoubo
      */
     TransitionRoation(t){
-        if(!window.aramLock){
+        if(!window.triggerGiftSwitch){
             return;
         }
-        aramJsonParam.tranRoationParam.a =   this.aram.rotation;
-        aramJsonParam.tranRoationParam.b =   window.giftReplacement.rotation;
+        let gift_init_deg = this.aram.rotation * 180 / Math.PI
+        let alpha_aram_init_deg = window.giftReplacement.rotation * 180 / Math.PI
+        if(Math.abs(alpha_aram_init_deg) > 360 ){
+            alpha_aram_init_deg = -(Math.abs(alpha_aram_init_deg) - 360);
+        }
+
+         aramJsonParam.tranRoationParam.a =   gift_init_deg;
+         aramJsonParam.tranRoationParam.b =   alpha_aram_init_deg;
         let res = util.lerp(aramJsonParam.tranRoationParam.a,
             aramJsonParam.tranRoationParam.b,
             aramJsonParam.tranRoationParam.t);
-      //  let rad =   - 60 * Math.PI / 180
-        let deg =  this.aram.rotation * 180 / Math.PI
-        let deg1 =  window.giftReplacement.rotation * 180 / Math.PI
-
-        let deg2 = Math.abs(deg1) - 360;
-        let rad2 =   - deg2 * Math.PI / 180
-        console.log("res = " + deg," res1 = "+ deg1, " res2 = "+ deg2);
+        let rad = res * Math.PI / 180
         aramJsonParam.tranRoationParam.t += this.roSpeed * t * 0.01;
-        this.aram.rotation = rad2;
+        this.aram.rotation = rad;
+        console.log("angel = "+ this.angel);
     }
 
 
@@ -132,22 +134,22 @@ export default class Gift {
         if(Math.floor(tan1)
             == Math.floor(tan2)){//判断正切值是否相等来判断武器是否重合
             console.log("停住了")
-            window.aramLock = true;
+            //window.aramLock = true;
+            window.triggerGiftSwitch = true;
             this.aram.anchor.set(0.5,0.5);//0 , 0.5
-
-          //  this.aram.rotation = window.giftReplacement.rotation;
-            console.log("f = "+window.giftReplacement.rotation)
-           // return;
-        }else {
-            let verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
-            this.radian =  this.angel * (Math.PI / 180);//角度转弧度
-            this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
-            this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
-            this.aram.rotation =  - this.radian - verticalRradian;
-            this.angel += this.roSpeed * t * 1.5;
+            return;
         }
+        this.verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
+        if(window.triggerGiftSwitch){
+            this.verticalRradian = 0;
+           // this.angel = this.aram.rotation * Math.PI / 180;
+        }
+        this.radian =  this.angel * (Math.PI / 180);//角度转弧度
 
-
+        this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
+        this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
+       // this.aram.rotation =  -this.radian - this.verticalRradian;
+        this.angel += this.roSpeed * t * 1.5;
     }
 
     DrawDebugLine(){

@@ -1,8 +1,8 @@
 var aramJsonParam  ={
     tranRoationParam:{
         isLock:false,
-        a:0,
-        b:360,
+        a:-90,
+        b:-154,
         t:0.01,
         initT:0.01
     },
