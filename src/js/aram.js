@@ -10,9 +10,10 @@ export default class Aram {
       this.radian = 0;
       this.isGift = alpha == 1 ? false : true;
       this.initRadian
-      this.roSpeed = 1;
+      this.roSpeed = 5;
       this.radius = 100;
       this.alpha = alpha;
+      this.debugLine = null;
       this.Init();
     }
 
@@ -33,6 +34,7 @@ export default class Aram {
         this.aram.alpha= this.alpha;
         this.app.stage.addChild(this.aram);
         this.draw();
+        this.tempCricle()
     }
     gifReplacement(){
         if(this.isGift){
@@ -48,13 +50,37 @@ export default class Aram {
         this.angel += this.roSpeed * t * 1.5;
     }
 
+    tempCricle(){
+        const graphics = new PIXI.Graphics();
+        graphics.lineStyle(0);
+        graphics.beginFill(0xDE3249, 1);
+        graphics.drawCircle(0, 0, 5);
+        graphics.endFill();
+        this.app.stage.addChild(graphics);
+        this.debugLine = graphics;
+
+
+    }
+
+
+    drawDebugLine(){
+        if(!this.isGift){
+            return;
+        }
+        this.debugLine.clear();
+        this.debugLine.beginFill(0xDE3249, 1);
+        this.debugLine.drawCircle(this.aram.x, this.aram.y, 5);
+        this.debugLine.endFill();
+        this.debugLine.closePath();
+    }
     draw(){
         this.app.ticker.add((delta) => {
-            if(!window.aramLock){
-                this.gifReplacement();
-                this.KnifeDraw(delta);
+            if(window.aramLock){
+                return;
             }
-
+            this.gifReplacement();
+            this.KnifeDraw(delta);
+            this.drawDebugLine();
         });
     }
 }

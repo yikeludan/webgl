@@ -12,6 +12,7 @@ export default class Gift {
       this.roSpeed = 2;
       this.radius = 35;
       this.alpha = alpha;
+      this.debugLine = null;
       this.anParam = {
           a:0,
           b:360,
@@ -30,22 +31,23 @@ export default class Gift {
         this.aram.x = window.hero.x + Math.sin(this.initRadian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.initRadian)* this.radius;
         this.aram.rotation = this.initRadian;
-        this.aram.anchor.set(0,0.5);
+        this.aram.anchor.set(0,0.5);//0 , 0.5
         this.aram.scale.set(0.5);
         this.aram.alpha= this.alpha;
         this.app.stage.addChild(this.aram);
         this.draw();
-
+        this.tempCricle()
 
     }
 
-    tempCricle(t){
+    tempCricle(){
         const graphics = new PIXI.Graphics();
         graphics.lineStyle(0);
         graphics.beginFill(0xDE3249, 1);
-        graphics.drawCircle(this.aram.x, this.aram.y, 3);
+        graphics.drawCircle(0, 0, 10);
         graphics.endFill();
         this.app.stage.addChild(graphics);
+        this.debugLine = graphics;
 
     }
 
@@ -85,46 +87,58 @@ export default class Gift {
     }
 
 
+    TransitionRoation(){
+
+    }
+
+
     KnifeDraw1(t){
         let apAramX = window.giftReplacement.x - window.hero.x;
         let apAramY = window.giftReplacement.y - window.hero.y;
-
         let vec = this.CuVectorMagnitude(apAramX,apAramY);
-
-
         let a = vec.y / vec.x;
-
         let giftX = this.aram.x - window.hero.x;
         let giftY = this.aram.y - window.hero.y;
-
-        let vec1 = this.CuVectorMagnitude(giftX,giftY);
-
-
+        let vec1 = this.CuVectorMagnitude(giftX,giftY);//化为单位向量
         let b = vec1.y / vec1.x;
-
         let tan1 = Math.atan2(giftY,giftX);
-        let  tan2 = Math.atan2(apAramY,apAramX);
-        console.log(a,b);
-        if(a  == b){
+        let tan2 = Math.atan2(apAramY,apAramX);
+        if(Math.floor(tan1)
+            == Math.floor(tan2)){//判断正切值是否相等来判断武器是否重合
             console.log("停住了")
-           // window.aramLock = true;
+            window.aramLock = true;
+            this.aram.anchor.set(0.5,0.5);//0 , 0.5
 
-
+          //  this.aram.rotation = window.giftReplacement.rotation;
+            console.log("f = "+window.giftReplacement.rotation)
+           // return;
+        }else {
+            let verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
+            this.radian =  this.angel * (Math.PI / 180);//角度转弧度
+            this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
+            this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
+            this.aram.rotation =  - this.radian - verticalRradian;
+            this.angel += this.roSpeed * t * 1.5;
         }
 
-        let verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
-        this.radian =  this.angel * (Math.PI / 180);//角度转弧度
-        this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
-        this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
-        this.aram.rotation =  - this.radian - verticalRradian;
-        this.angel += this.roSpeed * t * 1.5;
 
+    }
+
+    drawDebugLine(){
+        this.debugLine.clear();
+        this.debugLine.beginFill(0xDE3249, 1);
+        this.debugLine.drawCircle(this.aram.x, this.aram.y, 5);
+        this.debugLine.endFill();
+        this.debugLine.closePath();
     }
 
     draw(){
         this.app.ticker.add((delta) => {
+            if(window.aramLock){
+                return;
+            }
             this.KnifeDraw1(delta);
-            this.tempCricle(delta);
+            this.drawDebugLine();
         });
     }
 }
