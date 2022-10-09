@@ -43,6 +43,9 @@ export default class Aram {
     }
 
     KnifeDraw(t){
+        if(window.triggerGiftMove){
+           // return;
+        }
         this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;
@@ -64,6 +67,7 @@ export default class Aram {
 
 
     drawDebugLine(){
+
         if(!this.isGift){
             return;
         }
@@ -75,9 +79,6 @@ export default class Aram {
     }
     draw(){
         this.app.ticker.add((delta) => {
-            if(window.aramLock){
-                return;
-            }
             this.gifReplacement();
             this.KnifeDraw(delta);
             this.drawDebugLine();

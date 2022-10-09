@@ -4,7 +4,8 @@ var aramJsonParam  ={
         a:-90,
         b:-154,
         t:0.01,
-        initT:0.01
+        initT:0.01,
+        res:0
     },
     broken:{
         isLock:false,

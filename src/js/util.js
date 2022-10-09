@@ -15,11 +15,23 @@ const util = {
     cuVectorMagnitude(x,y){
         let param=Math.sqrt(Math.pow(x,2)
             +Math.pow(y,2));
-        let vectorMagnitude = null;
+        let vectorMagnitude = {x:0,y:0};
         vectorMagnitude.x = x/param;
         vectorMagnitude.y = y/param;
         return vectorMagnitude;
     },
+
+    cuVectorMagnitudeV2(x,y){
+        let param=Math.sqrt(Math.pow(x,2)
+            +Math.pow(y,2));
+        let vec2 = {x:0,y:0}
+        vec2.x = x/param;
+        vec2.y = y/param;
+        return vec2;
+    },
+
+
+
     lerp(a,b,t){//缓动函数
         if (t <= 0){
             return a;
