@@ -111,13 +111,16 @@ export default class Gift {
         if(!window.triggerGiftMove){
             return;
         }
+        let dis = vector2.distance(window.giftReplacement,this.aram);
+        console.log("dis = "+dis);
         if(Math.abs(this.aram.x) - Math.abs(window.giftReplacement.x) <=10
             && Math.abs(this.aram.y) - Math.abs(window.giftReplacement.y) <=10 ){
-            console.log("彻底重合");
+           // console.log("彻底重合");
             window.triggerGiftMove = true;
             this.aram.alpha = 0;
             window.giftReplacement.alpha = 1;
             this.debugLine.alpha = 0;
+            window.globalLock = true;
             return;
         }
         //console.log("开始重合")
@@ -130,7 +133,7 @@ export default class Gift {
             aramJsonParam.trangiftSpeedParam.t);
         this.aram.x += unitVector.x * t * res  ;
         this.aram.y += unitVector.y * t * res  ;
-        aramJsonParam.trangiftSpeedParam.t += this.roSpeed * t * 0.01;
+        aramJsonParam.trangiftSpeedParam.t += this.roSpeed * t * 0.002;
     }
 
 

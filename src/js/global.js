@@ -4,3 +4,4 @@ window.giftReplacement = null;
 window.aramLock = false;
 window.triggerGiftSwitch = false;
 window.triggerGiftMove = false;
+window.globalLock = false;

@@ -19,8 +19,10 @@ const vector2 = {
         vec.vy = -vec.vy;
     },
     //向量长度
-    length: function () {
-        return Math.sqrt(vec.vx * vec.vx + vec.vy * vec.vy);
+    distance(vector1,vector2) {
+        let a = vector1.x - vector2.x;
+        let b = vector1.y - vector2.y;
+        return Math.sqrt(a * a + b * b);
     },
     //向量长度的平方
     lengthSquared: function () {
