@@ -10,7 +10,7 @@ export default class Aram {
       this.radian = 0;
       this.isGift = alpha == 1 ? false : true;
       this.initRadian
-      this.roSpeed = 5;
+      this.roSpeed = 2;
       this.radius = 100;
       this.alpha = alpha;
       this.debugLine = null;
@@ -46,6 +46,7 @@ export default class Aram {
         if(window.triggerGiftMove){
            // return;
         }
+        console.log("sp = "+window.aramSpeed);
         this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;

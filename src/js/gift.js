@@ -11,7 +11,7 @@ export default class Gift {
       this.angel = angel;
       this.radian = 0;
       this.initRadian
-      this.roSpeed = 2;
+      this.roSpeed =3;
       this.radius = 35;
       this.alpha = alpha;
       this.debugLine = null;
@@ -111,13 +111,26 @@ export default class Gift {
         if(!window.triggerGiftMove){
             return;
         }
+        if(Math.abs(this.aram.x) - Math.abs(window.giftReplacement.x) <=10
+            && Math.abs(this.aram.y) - Math.abs(window.giftReplacement.y) <=10 ){
+            console.log("彻底重合");
+            window.triggerGiftMove = true;
+            this.aram.alpha = 0;
+            window.giftReplacement.alpha = 1;
+            this.debugLine.alpha = 0;
+            return;
+        }
         //console.log("开始重合")
         let dx = window.giftReplacement.x - this.aram.x;
         let dy = window.giftReplacement.y - this.aram.y;
         let unitVector = this.CuVectorMagnitude(dx,dy);//化作单位向量
 
-        this.aram.x += unitVector.x * t * this.roSpeed * 5;
-        this.aram.y += unitVector.y * t * this.roSpeed * 5;
+        let res = util.lerp(aramJsonParam.trangiftSpeedParam.a,
+            aramJsonParam.trangiftSpeedParam.b,
+            aramJsonParam.trangiftSpeedParam.t);
+        this.aram.x += unitVector.x * t * res  ;
+        this.aram.y += unitVector.y * t * res  ;
+        aramJsonParam.trangiftSpeedParam.t += this.roSpeed * t * 0.01;
     }
 
 
