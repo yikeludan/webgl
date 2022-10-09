@@ -1,5 +1,6 @@
 /*
  * Tween.js
+ *
  * t: current time（当前时间）；
  * b: beginning value（初始值）；
  * c: change in value（变化量）；
