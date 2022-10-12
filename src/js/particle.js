@@ -25,7 +25,7 @@ export default class Particle {
     }
     DrawParticle(t){
         this.particle.clear();
-        this.particle.beginFill(0xDE3249, 1);
+        this.particle.beginFill(0x7CFC00, 1);
         this.particle.drawCircle(this.particle.position.x, this.particle.position.y, 5);
         this.particle.endFill();
         this.particle.closePath();
