@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 import Aram from "./aram";
 import util from "./util";
 import Gift from "./gift";
+import Particle from "./particle";
 export default class MoveVec {
     constructor() {
         this.app = null;
@@ -85,6 +86,8 @@ export default class MoveVec {
         this.app.stage.interactive = true;
         this.bunny.interactive = true;
         window.hero = this.bunny;
+
+        let particle = new Particle(this.app);
         this.getAramList();
         this.mouseMoveSp();
         this.draw();

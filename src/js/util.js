@@ -55,6 +55,24 @@ const util = {
             diff_y = vec2.y - vec1.y;
         //返回角度,不是弧度
         return 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+    },
+    /**
+     *
+     * 三阶贝塞尔曲线
+     * B(t) = P0 * (1-t)^3 + 3 * P1 * t * (1-t)^2 + 3 * P2 * t^2 * (1-t) + P3 * t^3, t ∈ [0,1]
+     * @param t
+     * @param p0
+     * @param p1
+     * @param p2
+     * @param p3
+     * @returns {*}
+     */
+    calculateBezierPointForCubic(t, p0, p1, p2, p3){
+        let point = {x:0,y:0};
+        let temp = 1 - t;
+        point.x = p0.x * temp * temp * temp + 3 * p1.x * t * temp * temp + 3 * p2.x * t * t * temp + p3.x * t * t * t;
+        point.y = p0.y * temp * temp * temp + 3 * p1.y * t * temp * temp + 3 * p2.y * t * t * temp + p3.y * t * t * t;
+        return point;
     }
 
 

@@ -46,6 +46,7 @@ export default class Aram {
         if(window.triggerGiftMove){
            // return;
         }
+        this.roSpeed = window.aramSpeed == null ? 2 : window.aramSpeed;
         this.radian =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
         this.aram.y = window.hero.y + Math.cos(this.radian)* this.radius;

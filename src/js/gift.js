@@ -112,15 +112,15 @@ export default class Gift {
             return;
         }
         let dis = vector2.distance(window.giftReplacement,this.aram);
-        console.log("dis = "+dis);
-        if(Math.abs(this.aram.x) - Math.abs(window.giftReplacement.x) <=10
-            && Math.abs(this.aram.y) - Math.abs(window.giftReplacement.y) <=10 ){
-           // console.log("彻底重合");
+       // console.log("dis = "+dis);
+        if(Math.abs(this.aram.x) - Math.abs(window.giftReplacement.x) <=1
+            && Math.abs(this.aram.y) - Math.abs(window.giftReplacement.y) <=1 ){
             window.triggerGiftMove = true;
             this.aram.alpha = 0;
             window.giftReplacement.alpha = 1;
             this.debugLine.alpha = 0;
             window.globalLock = true;
+            window.aramSpeed = 7;
             return;
         }
         //console.log("开始重合")
@@ -133,7 +133,7 @@ export default class Gift {
             aramJsonParam.trangiftSpeedParam.t);
         this.aram.x += unitVector.x * t * res  ;
         this.aram.y += unitVector.y * t * res  ;
-        aramJsonParam.trangiftSpeedParam.t += this.roSpeed * t * 0.002;
+        aramJsonParam.trangiftSpeedParam.t += this.roSpeed * t * 0.01;
     }
 
 
@@ -141,7 +141,7 @@ export default class Gift {
         if(window.aramLock){
             return;
         }
-        console.log("开始计算")
+       // console.log("开始计算")
         let apAramX = window.giftReplacement.x - window.hero.x;
         let apAramY = window.giftReplacement.y - window.hero.y;
         let vec = this.CuVectorMagnitude(apAramX,apAramY);
@@ -166,7 +166,7 @@ export default class Gift {
         if(window.triggerGiftMove){
             return;
         }
-        console.log("开始跑")
+      //  console.log("开始跑")
         this.verticalRradian =  - 90 * (Math.PI / 180);//多给一个弧度让武器呈现90度角
         this.radian  =  this.angel * (Math.PI / 180);//角度转弧度
         this.aram.x = window.hero.x + Math.sin(this.radian)* this.radius;
