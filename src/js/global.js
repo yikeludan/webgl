@@ -5,3 +5,5 @@ window.aramLock = false;
 window.triggerGiftSwitch = false;
 window.triggerGiftMove = false;
 window.globalLock = false;
+window.particleStartVecX = null;
+window.particleStartVecY = null;

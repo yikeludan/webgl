@@ -3,6 +3,7 @@ import Aram from "./aram";
 import util from "./util";
 import Gift from "./gift";
 import Particle from "./particle";
+import Particle1 from "./particle1";
 export default class MoveVec {
     constructor() {
         this.app = null;
@@ -87,7 +88,7 @@ export default class MoveVec {
         this.bunny.interactive = true;
         window.hero = this.bunny;
 
-        let particle = new Particle(this.app);
+        let particle = new Particle1(this.app);
         this.getAramList();
         this.mouseMoveSp();
         this.draw();
@@ -136,7 +137,13 @@ export default class MoveVec {
             this.flag = true
             this.x = e.data.global.x;
             this.y = e.data.global.y;
-            console.log(e.data.global.x,e.data.global.y);
+            window.particleStartVecX = e.data.global.x;
+            window.particleStartVecY = e.data.global.y;
+
+            console.log("winx = "+window.particleStartVecX);
+            console.log("winy = "+window.particleStartVecY);
+
+
         })
         this.app.stage.on(eventSystemTwo,(e)=>{
             if(!this.flag){
